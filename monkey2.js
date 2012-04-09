@@ -3,8 +3,8 @@ var fs = require('fs');
 var pt = 'nxt>';
 var modPath = './nmod';
 var context = {
-    src: './src',
-    dst: './target'
+    src  : './src',
+    dest : './target'
 };
 
 // show the intro message
@@ -16,21 +16,21 @@ console.log('default commands are test run build clean');
 // the actions array contains the actions to be executed on each command step.
 var commandTree = {
     run : {
-              key: 'run',
-              actions: [],
-          },
+        key: 'run',
+        actions: [],
+    },
     build : {
-                key: 'build',
-                actions: []
-            },
+        key: 'build',
+        actions: []
+    },
     test : {
-               key: 'test',
-               actions: []
-           },
+        key: 'test',
+        actions: []
+    },
     clean : {
-                key: 'clean',
-                actions: []
-            },
+        key: 'clean',
+        actions: []
+    },
 
 };
 
@@ -42,13 +42,13 @@ commandTree.clean.depends = null;
 
 // insert the default logger;
 // need to build this in...but for now, leave as TODO
- var logger = function(pre){
-     var self = this;
-     self.pre = pre;
-     self.log = function(message){
-         console.log(pre + '\t-' + message);
-     };
- };
+var logger = function(pre){
+    var self = this;
+    self.pre = pre;
+    self.log = function(message){
+        console.log(pre + '\t-' + message);
+    };
+};
 // commandTree.run.logger   = logger(commandTree.run.key);
 // commandTree.test.logger  = logger(commandTree.test.key);
 // commandTree.clean.logger = new logger(commandTree.clean.key);
@@ -56,12 +56,12 @@ commandTree.clean.depends = null;
 
 // check array
 var isArray = function (o) {
-      return Object.prototype.toString.call(o) === '[object Array]';
+    return Object.prototype.toString.call(o) === '[object Array]';
 }
 
 // insert the default actions
 var pushFunction = function(command, func){
-    console.log('1' + func + ' 2.' + isArray(func) + ' 3.' + func.toString());
+    // console.log('1' + func + ' 2.' + isArray(func) + ' 3.' + func.toString());
     if(isArray(func)){
         command.actions = command.actions.concat(func);
     } else if (typeof func === 'Function'){
@@ -72,20 +72,29 @@ var pushFunction = function(command, func){
 //load the default modules
 var loadMods = function(modPath){
     var paths = fs.readdirSync(modPath);
-    var stats;
-    paths.forEach(function(path){
-        stats = fs.statSync(modPath + '/' + path);
-        if(stats.isFile()){
-            console.log('loading: ' + modPath + '/' + path);
-            var t = require(modPath + '/' + path); 
-            if(t && t.name && t.register){
-                var cmd = commandTree[t.name];
-                if(cmd){
-                    console.log('aabbcc: ' + cmd.key);
-                    pushFunction(cmd, t.register());
-                }
+    var stats, nodePath;
+    var registerFunction = function (req){
+        if(req && req.lifecycle && req.register){
+            var cmd = commandTree[req.lifecycle];
+            if(cmd){
+                pushFunction(cmd, req.register());
             }
         }
+    };
+    paths.forEach(function(path){
+        nodePath = modPath + '/' + path;
+        stats = fs.statSync(nodePath);
+        if(stats.isFile() || stats.isDirectory()){
+            console.log('loading: ' + nodePath);
+            var t = require(nodePath); 
+            registerFunction(t);
+        }
+
+        // if(stats.isDirectory()){
+        //     console.log('loading dir: ' + nodePath);
+        //     var t = require(path);
+        //     registerFunction(t);
+        // }
     });
 
 };
@@ -110,7 +119,7 @@ var runCmd = function(command){
     console.log('cmd: ' + command.key + ' ' + actions.length);
     actions.forEach(function(action){
         console.log('type: ' + typeof action + ' ' + action.toString());
-        action.call(new Object());
+        action.call(new Object(), context);
     });
 };
 
@@ -139,8 +148,8 @@ var parse = function (line){
 
 // the next to the end executes the rl module.  
 var readline = require('readline'),
-    rl = readline.createInterface(process.stdin, process.stdout),
-    prefix = 'OHAI> ';
+rl = readline.createInterface(process.stdin, process.stdout),
+prefix = 'OHAI> ';
 
 rl.on('line', function(line) {
     parse(line);

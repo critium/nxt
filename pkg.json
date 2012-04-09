@@ -1,0 +1,44 @@
+{
+    "name": "nxt-clean",
+    "preferGlobal": "false",
+    "version": "0.0.1",
+    "author": "critium",
+    "description": "clean module for nxt tool",
+    "contributors": [ 
+        {
+        "name": "Marak Squires",
+        "email": "marak@nodejitsu.com"
+        } 
+    ],
+    "bin": {
+        "http-server": "./bin/http-server"
+    },
+    "scripts": {
+        "start": "node ./bin/http-server",
+        "test": "vows --spec --isolate"
+    },
+    "main": "./lib/http-server",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nodejitsu/http-server.git"
+    },
+    "keywords": [
+        "cli",
+        "http",
+        "server"
+    ],
+    "dependencies" : {
+        "wrench"   :  "*",
+    },
+    "noAnalyze": true,
+    "devDependencies": {
+        "vows"    :  "0.5.x",
+        "request" :  "2.1.x"
+    },
+    "bundleDependencies": [
+    ],
+    "license": "MIT",
+    "engine": {
+        "node": ">=0.4"
+    }
+}

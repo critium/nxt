@@ -1,0 +1,12 @@
+{
+    "name": "nxt-clean",
+    "preferGlobal": "false",
+    "version": "0.0.1",
+    "main": "./clean",
+    "dependencies" : {
+        "wrench"   :  "*"
+    },
+    "engine": {
+        "node": ">=0.4"
+    }
+}
