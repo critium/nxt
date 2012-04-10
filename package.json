@@ -1,0 +1,21 @@
+{
+  "author": "critium",
+  "name": "nxt",
+  "description": "npm extensions",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "/Volumes/CRUZER/dev/nxt.git"
+  },
+  "scripts": {
+    "test": "testme",
+    "start": "node ./lib/cli.js"
+  },
+  "engines": {
+    "node": "~0.6.7"
+  },
+  "dependencies": {
+    "npm": "1.1.x"
+  },
+  "devDependencies": {}
+}
