@@ -1,0 +1,30 @@
+info it worked if it ends with ok
+verbose cli [ 'node', '/usr/local/bin/npm', 'search', 'step' ]
+info using npm@1.1.15
+info using node@v0.6.7
+verbose config file /Users/pule/.npmrc
+verbose config file /usr/local/etc/npmrc
+verbose config file /usr/local/lib/node_modules/npm/npmrc
+verbose raw, before any munging /-/all/since?stale=update_after&startkey=1333685305000
+verbose url resolving [ 'https://registry.npmjs.org/',
+verbose url resolving   './-/all/since?stale=update_after&startkey=1333685305000' ]
+verbose url resolved https://registry.npmjs.org/-/all/since?stale=update_after&startkey=1333685305000
+http GET https://registry.npmjs.org/-/all/since?stale=update_after&startkey=1333685305000
+ERR! Error: getaddrinfo ENOENT
+ERR!     at errnoException (dns.js:31:11)
+ERR!     at Object.onanswer [as oncomplete] (dns.js:140:16)
+ERR! You may report this log at:
+ERR!     <http://github.com/isaacs/npm/issues>
+ERR! or email it to:
+ERR!     <npm-@googlegroups.com>
+ERR! 
+ERR! System Darwin 11.2.0
+ERR! command "node" "/usr/local/bin/npm" "search" "step"
+ERR! cwd /Users/pule/swdev/workspace/modules/nxt
+ERR! node -v v0.6.7
+ERR! npm -v 1.1.15
+ERR! syscall getaddrinfo
+ERR! code ENOTFOUND
+ERR! message getaddrinfo ENOENT
+ERR! errno {}
+verbose exit [ 1, true ]
